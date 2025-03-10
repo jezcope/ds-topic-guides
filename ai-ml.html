@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nora McGregor">
+<meta name="dcterms.date" content="2024-06-04">
+<meta name="keywords" content="TBD, TBD">
+
+<title>AI &amp; Machine Learning in Libraries</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./images/Favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4e463049768ec781b502135f06fe4e5c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "Search",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-54HL7T1Z2K"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-54HL7T1Z2K', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./Favicon.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text"><strong>Digital Scholarship &amp; Data Science Topic Guides for Library Professionals</strong></span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./topicguides.html" aria-current="page"> 
+<span class="menu-text">TOPIC GUIDES</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-additional-resources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">ADDITIONAL RESOURCES</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-additional-resources">    
+        <li>
+    <a class="dropdown-item" href="./references.html">
+ <span class="dropdown-text"><strong>RECOMMENDED READING LISTS</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./dstp.html">
+ <span class="dropdown-text"><strong>START A LOCAL TRAINING PROGRAMME</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./reports.html">
+ <span class="dropdown-text"><strong>SKILLS COMPETENCY FRAMEWORKS &amp; REPORTS</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./training-platforms.html">
+ <span class="dropdown-text"><strong>TRAINING PLATFORMS</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./networks.html">
+ <span class="dropdown-text"><strong>USEFUL NETWORKS</strong></span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">CONTRIBUTE</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
+        <li>
+    <a class="dropdown-item" href="./contributing.html">
+ <span class="dropdown-text"><strong>CONTRIBUTE TO OUR PROJECT</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./guidelines.html">
+ <span class="dropdown-text"><strong>AUTHOR GUIDANCE &amp; STYLE GUIDE</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./licensing.html">
+ <span class="dropdown-text"><strong>LICENSING &amp; RE-USE</strong></span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./project-overview.html"> 
+<span class="menu-text">ABOUT</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./contact.html"> 
+<span class="menu-text">CONTACT</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ai-ml.html">AI &amp; Machine Learning in Libraries</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./topicguides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><strong>TOPIC GUIDES</strong></span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-ml.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">AI &amp; Machine Learning in Libraries</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">APIs: A starter guide for Librarians</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./atr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Automatic Text Recognition (OCR/HTR)</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./collectionsasdata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collections as Data: Getting Started</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./computer-vision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computer Vision</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./copyright.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Copyright &amp; Licensing: Current context and considerations for researchers and libraries using AI in research today</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./crowdsourcing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Crowdsourcing and Citizen Science in Cultural Heritage</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataviz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Visualisation</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./digitalmapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Digital Mapping</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GitHub: How to navigate and contribute to Git-based projects</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iiif.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IIIF</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lod.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linked Open Data in Library Use Today</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming for Librarians: Where to begin</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./openresearch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Open Research (Open Science)</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workingwdata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with Data</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Jump to…</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#relevance-to-the-library-sector-case-studiesuse-cases" id="toc-relevance-to-the-library-sector-case-studiesuse-cases" class="nav-link" data-scroll-target="#relevance-to-the-library-sector-case-studiesuse-cases">Relevance to the Library Sector (Case Studies/Use Cases)</a></li>
+  <li><a href="#hands-on-activity-and-other-self-guided-tutorials" id="toc-hands-on-activity-and-other-self-guided-tutorials" class="nav-link" data-scroll-target="#hands-on-activity-and-other-self-guided-tutorials">Hands-on activity and other self-guided tutorial(s)</a></li>
+  <li><a href="#recommended-readingviewing" id="toc-recommended-readingviewing" class="nav-link" data-scroll-target="#recommended-readingviewing">Recommended Reading/Viewing</a></li>
+  <li><a href="#finding-communities-of-practice" id="toc-finding-communities-of-practice" class="nav-link" data-scroll-target="#finding-communities-of-practice">Finding Communities of Practice</a></li>
+  </ul>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/libereurope/ds-essentials/blob/main/book/ai-ml.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/libereurope/ds-essentials/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">AI &amp; Machine Learning in Libraries</h1>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Nora McGregor <a href="mailto:Digitalresearch@bl.uk" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0001-6560-5586" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://www.bl.uk">
+            British Library
+            </a>
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 4, 2024</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">February 10, 2025</p>
+    </div>
+  </div>
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    <p>A gentle introduction to AI &amp; Machine Learning demystifying concepts and technologies through the examples of practical applications in library work today.</p>
+  </div>
+</div>
+
+<div>
+  <div class="keywords">
+    <div class="block-title">Keywords</div>
+    <p>TBD, TBD</p>
+  </div>
+</div>
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>AI is mentioned absolutely everywhere these days, first it was just in movies, the news, but now it’s cropping up in our library meetings and strategies and funding calls, but what does it really mean, particularly in a library context? Let’s try to get to the bottom of this!</p>
+<p>To do that I always like to start off with a bit of basic jargon busting.</p>
+<p><strong>Artificial Intelligence (AI)</strong> is actually a really broad field of computer science (and an umbrella term) that refers to the research and development of systems and machines capable of doing tasks that typically require human intelligence to perform, such as</p>
+<ul>
+<li>Reasoning</li>
+<li>Problem-solving</li>
+<li>Learning</li>
+<li>Perception</li>
+</ul>
+<p>Sometimes folks may speak of or refer to AI as systems and machines that actually have true intelligence, and though today’s AI systems are shockingly convincing in how well they perform, what we’re seeing today are just very advanced machine learning algorithms and models performing specific and discrete functions extremely well! We’re a long way off (if ever) from machines having sentience (or, <strong>Artificial General Intelligence (AGI)</strong>/<strong>Strong AI</strong>) so don’t worry!</p>
+<p>You might also sometimes hear people talk about <strong>Traditional AI</strong> vs <strong>Generative AI</strong>. <strong>Traditional AI</strong> refers to using machine learning based systems for doing tasks like classifying data (e.g., assigning labels to images, automatically transcribing handwritten texts, or identifying genre of digitised texts). This is the type of AI we make a whole lot of use of in the library world. <strong>Generative AI</strong> on the other hand refers broadly to systems whose primary function is to generate new content (e.g., conversation, books, art), often in response to text or image prompts. This is where conversation generating AI systems like ChatGPT (Generative Pre-trained Transformer) fall under for example and we’re only just now exploring the potential applications for these new powerful Generative AI systems in library work.</p>
+<p>Whenever AI is being discussed you may often hear the term <strong>Machine Learning (ML)</strong> mentioned, and sometimes they’re used interchangeably which can be confusing!</p>
+<p><strong>Machine Learning (ML)</strong> is more specifically a main subfield of AI and core technology underpinning the other subfields of AI, that focuses on the development of algorithms and models that allow computers to learn patterns and relationships from data and make predictions on new data. Instead of being explicitly programmed for specific tasks, ML algorithms use data to learn and improve their performance over time.</p>
+<blockquote class="blockquote">
+<p><strong>The primary task of Machine Learning is prediction.</strong></p>
+</blockquote>
+<p><strong>An algorithm</strong> is a plan, a set of step-by-step instructions, in order of operation, for solving a problem or performing a task. Making a sandwich is a classic example. “Get two pieces of bread…” If we want to tell a computer to do something, we have to write a computer program that will tell it, step-by-step, exactly what we want it to do and how we want it to do it.</p>
+<p><strong>A machine learning algorithm</strong> is a special kind of algorithm designed to help computers learn from data. Instead of giving the computer explicit instructions for every task, we give it data and let it find patterns, relationships, and trends in that data in order to make decisions or predictions on new data on its own.</p>
+<p><strong>“Training a model”</strong> is the process of teaching a machine learning algorithm to make predictions or decisions based on data. It’s important to remember that data is the lifeblood of ML and the model is only as good as the type and quality of data you give it.</p>
+<p><strong>A machine learning model</strong> represents what was learned by a machine learning algorithm and this is what can be used to make predictions on new data without needing explicit instructions. The model contains the rules, numbers, and any other algorithm-specific data structures required to make predictions on new data. If it doesn’t work very well, you can go back and give the algorithm more data or tweak its parameters to create a new better model.</p>
+<blockquote class="blockquote">
+<p><strong>Here’s a super simplistic example of this type of process in action:</strong><br> <br> Let’s say I have thousands of images of handwritten manuscript pages digitised from our library collection and ready to go online. The problem is, I want to make them all text searchable as well, but to transcribe these all by hand would take me well into my retirement and I have other things to be getting on with. I would like to train a machine learning model to help me automatically recognise the handwritten text in this collection. I would first need to somehow show my machine learning algorithm examples of a correct result so that it could start to recognise the pattern of that (in this case, text on a page). To do this I can show it images with associated text annotations which have been transcribed perfectly by me, the more, the better! Once the algorithm has learned a bit about what a correct page of handwritten text looks like, a model is then created which contains all the rules and parameters and calculations ready for the particular task I have set it of predicting what handwritten text is on pages of this particular collection that it’s never seen before!</p>
+</blockquote>
+<p>We actually <a href="https://blogs.bl.uk/digital-scholarship/2020/01/using-transkribus-for-arabic-handwritten-text-recognition.html">do quite alot of the above</a> at the British Library, you can read more about the actual process and results here, and I’ll cover a bit more of this in the next section!</p>
+<p><img src="https://github.com/libereurope/ds-essentials/blob/main/book/images/ArabicHTR.jpg?raw=true" class="img-fluid"> Snapshot of an interface from Transkribus software used to create data to train a model to recognise handwritten arabic manuscript pages from a British Library collection.</p>
+<section id="ok-quick-quiz-time" class="level3">
+<h3 class="anchored" data-anchor-id="ok-quick-quiz-time">Ok, quick quiz time!</h3>
+<p>Remembering that Machine Learning is about prediction, which of the following do you think would require ML?</p>
+<ol type="1">
+<li>Counting the number of people in a museum using information from entry and exit barriers.</li>
+<li>A search system that looks for images similar to a user submitted sketch.</li>
+<li>A system that recommends library books based on what other users have ordered.</li>
+<li>A queueing system that spreads people evenly between 5 ticket booths</li>
+<li>A program which extracts names from documents by finding all capitalised words and checking them against a list of known names</li>
+<li>A system which turns digitised handwritten documents into searchable text</li>
+<li>A robot that cleans the vases in a museum without bumping into them or breaking them</li>
+</ol>
+<p><em>If you answered 2, 3, 6 &amp; 7 you are correct! The others could all be most easily executed with a straightforward algorithm, programmed using a simple set of easily defined rules, rather than requiring prediction.</em></p>
+</section>
+</section>
+<section id="relevance-to-the-library-sector-case-studiesuse-cases" class="level2">
+<h2 class="anchored" data-anchor-id="relevance-to-the-library-sector-case-studiesuse-cases">Relevance to the Library Sector (Case Studies/Use Cases)</h2>
+<p>As you now know, machine learning algorithms and models underpin all the other subfields of AI and there are a LOT of subfields of AI depending on who you talk to! In this guide though we’ll focus our attention on just these two particular AI research areas to give you a general sense of how machine learning is practically applied in the library context today:</p>
+<ul>
+<li><strong>Natural Language Processing (NLP):</strong> which is concerned with making AI systems more capable of natural and effective interaction with humans <strong>(text and speech)</strong></li>
+<li><strong>Computer Vision (CV):</strong> which is concerned with enabling machines to interpret and make decisions based on <strong>visual data</strong> from the world.</li>
+</ul>
+<p>For a really great overview of a wider range of AI use cases in Libraries I recommend having a read of Section 3: Library Applications in Cox A &amp; Mazumdar’s <a href="https://journals.sagepub.com/doi/10.1177/09610006221142029#sec-3">Defining artificial intelligence for librarians (2022)</a> from 2022 which covers back-end operations and library services for users.</p>
+<p>Let’s have a look at some NLP and Computervision use cases in a library setting:</p>
+<section id="natural-language-processing-nlp" class="level3">
+<h3 class="anchored" data-anchor-id="natural-language-processing-nlp">Natural Language Processing (NLP)</h3>
+<p>NLP involves the development of a wide range of algorithms, models, and systems for analysing, understanding and extracting meaningful information from textual and speech data representing human language. We can use NLP for things like:</p>
+<section id="subject-indexing-to-enhance-library-catalogue-search" class="level4">
+<h4 class="anchored" data-anchor-id="subject-indexing-to-enhance-library-catalogue-search"><strong>Subject indexing to enhance library catalogue search</strong></h4>
+<p><strong>Named Entity Recognition (NER)</strong> is a text analysis process within NLP that helps turn unstructured text into structured text. A sentence or a chunk of text is parsed through to find entities that can be put under categories like names, organisations, locations, quantities, monetary values, percentages, etc.</p>
+<p><img src="https://github.com/libereurope/ds-essentials/blob/main/book/images/NER.png?raw=true" class="img-fluid"></p>
+<p><br>In the library world it can be used as part of a process to understand what subjects (people, places, concepts) are contained within a digitised text and help us enhance our catalogue records for items or search functionality. There is a very nicely outlined use case here of how the <a href="https://blog.ehri-project.eu/2018/08/27/named-entity-recognition/">United States Holocaust Memorial Museum used NER</a> to automatically extract person names and location from Oral History Transcript to improve indexing and search in their catalogue.</p>
+</section>
+<section id="automatic-language-detection-genre-classification" class="level4">
+<h4 class="anchored" data-anchor-id="automatic-language-detection-genre-classification"><strong>Automatic Language Detection &amp; Genre Classification</strong></h4>
+<p>The British Library has used different machine learning techniques and experiments derived from the field of NLP to assign language codes and genre classification to catalogue records, in order to enhance resources described. In the first phase of the <a href="https://bl.iro.bl.uk/concern/articles/6c99ffcb-0003-477d-8a58-64cf8c45ecf5">Automated Language Identification of Bibliographic Resources</a> project, language codes were assigned to 1.15 million records with 99.7% confidence. The automated language identification tools developed will be used to contribute to future enhancement of over 4 million legacy records. The <a href="https://living-with-machines.github.io/genre-classification/genre_classification.html">genre classification case study</a> includes a nice description of machine learning as well as references to other use cases for metadata clean up.</p>
+</section>
+<section id="text-conversation-generation" class="level4">
+<h4 class="anchored" data-anchor-id="text-conversation-generation"><strong>Text &amp; Conversation Generation</strong></h4>
+<p><strong>Language models</strong> are a type of machine learning model designed to predict the likelihood of a sequence of text, which means that they can be set up to predict the most likely way to continue a conversation. A <strong>large language model</strong> (LLM), such as the models behind ChatGPT, are highly complex neural networks that have been exposed to an enormous amount of text from books, articles, websites, and more. They perform natural language processing tasks such as generating and classifying text, answering questions, and translating text and are the backbone of NLP today. On the other hand there are <strong>small language models</strong> (SML) too which, well, you guessed it, are much smaller, as in, they don’t need quite as much data and time to be trained. Whether or not to use either depends on your use case and motivations!</p>
+<p>There are and have been for many years, large language models out there actually but ChatGPT has currently caught the popular imagination because of its publicly available interface and remarkable performance, so it’s worth spending a little time here unpacking just what ChatGPT is and its potential impact on library work.</p>
+<p>The large language models behind ChatGPT have learned something about patterns in grammar and word meaning, including the way that meaning arises contextually across multiple sentences and multiple turns in a conversation. When you ask ChatGPT a question, you are presenting the model with new information it tries to make a prediction on, in this case, it tries to generate a response that matches the pattern of conversation.</p>
+<p>You ask questions or give prompts to the model, and it provides responses in natural language, or rather, estimates what should come next in a conversation. When ChatGPT gives a response, it isn’t actually looking up information and then composing that information into a response; it’s just making an estimation of a response based on patterns it has seen. So, when you ask it factual questions, especially ones with common answers or phrases, it might give you an answer that sounds right but remember this is because it’s mimicking what it has seen in its training data.</p>
+<p>Librarians are still investigating use cases for this new Generative AI applications, but for now at least, ChatGPT is certainly useful as a personal writing assistant or tool to help give you ideas for</p>
+<ul>
+<li>creating a title for a new exhibition</li>
+<li>creating exhibition labels</li>
+<li>outlining a basic structure for an information literacy workshop</li>
+<li>creating a blog post on a topic for which you are very familiar</li>
+<li>helping you reword something for different audiences</li>
+<li>writing a funding proposal!</li>
+</ul>
+<p>It’s also good to get in the habit of trying out and being aware of how these particular models work as more and more library users will be using this technology too, and may not know quite have a clear understanding of what’s behind the responses generated by them. We’ve seen librarians having to answer queries about citations that have been made up by ChatGPT, article references which sound very much like they exist, but have just been hallucinated by the model!</p>
+</section>
+</section>
+<section id="computer-vision-cv-use-cases" class="level3">
+<h3 class="anchored" data-anchor-id="computer-vision-cv-use-cases">Computer Vision (CV) use cases</h3>
+<p>We can use computer vision to train models to automatically analyse and understand useful information from images and videos.</p>
+<p>In the library world we can use this to label millions of images with descriptive metadata (“this is a picture of a cat”), or, as we see below, a model can be trained to classify this image as a newspaper based on objects identified in the layout (for example, a nameplate for the newspaper, a headline, photographs, and illustrations and so on). The model learns how to identify that this is the NYT based on learning from other newspaper images it’s seen (for example, if given NY Tribune, NY Times, and NY Post images, it can distinguish between the various titles).</p>
+<p><img src="https://github.com/libereurope/ds-essentials/blob/main/book/images/CV.png?raw=true" class="img-fluid"></p>
+</section>
+<section id="putting-it-altogether-ml-cv-nlp" class="level3">
+<h3 class="anchored" data-anchor-id="putting-it-altogether-ml-cv-nlp">Putting it altogether: ML + CV + NLP</h3>
+<p>One of the state of the art applications of machine learning seen in cultural heritage at the moment is Handwritten Text Recognition (HTR) which we had a look at earlier briefly in our simple example of training a model. The idea with HTR is to convert digitised handwritten documents into searchable and machine readable text. To achieve this HTR actually uses a combination of Computer Vision (CV) and Natural Language Processing (NLP).</p>
+<p>Since handwriting can be tricky and ambiguous you might have a Computer Vision model try to identify possible letters from the shapes, and another to work out what the most likely word is from those shapes. But let’s imagine that there’s a smudge on the page, and the letters and maybe even whole words are completely illegible. In that case you might turn to your NLP language models which look at sentence level predictions, taking into account words in the whole line of text the model uses that context to work out what words are most likely missing in those smudged spots!</p>
+<p>Sometimes a model trained for a particular task (in the case of this HTR example, identifying a particular handwriting style) can be applied to similar content (other handwriting styles) with very good results. Transkribus has <a href="https://www.transkribus.org/public-models">Public AI Models (transkribus.org)</a> that have been created by users of the system and are then shared and can be reused by anyone.</p>
+</section>
+</section>
+<section id="hands-on-activity-and-other-self-guided-tutorials" class="level2">
+<h2 class="anchored" data-anchor-id="hands-on-activity-and-other-self-guided-tutorials">Hands-on activity and other self-guided tutorial(s)</h2>
+<p>The following quick little hands-on activities below were developed by the Digital Research Team for British Library staff as part of the <a href="https://blogs.bl.uk/digital-scholarship/2024/04/recovered-pages-dstp.html">Digital Scholarship Training Programme</a>.</p>
+<section id="activity-explore-natural-language-processing" class="level3">
+<h3 class="anchored" data-anchor-id="activity-explore-natural-language-processing">Activity: Explore Natural Language Processing</h3>
+<p>Copy and paste a paragraph of text from somewhere around the web, or from your own collections, and see how each of these cloud services handle it:</p>
+<ul>
+<li><a href="https://cloud.google.com/natural-language#section-2">Cloud Natural Language</a></li>
+<li><a href="https://www.ibm.com/demos/live/natural-language-understanding/self-service/home">IBM Watson Natural Language Understanding Text Analysis</a></li>
+<li><a href="https://demos.explosion.ai/displacy-ent">displaCy</a></li>
+<li><a href="https://voyant-tools.org/">Voyant Tools (voyant-tools.org)</a> Voyant Tools is an open-source, web-based application for performing text analysis. It supports scholarly reading and interpretation of texts or corpus, particularly by scholars in the <a href="https://en.wikipedia.org/wiki/Digital_humanities">digital humanities</a>, but also by students and the general public. It can be used to analyse online texts or ones uploaded by users.</li>
+<li><a href="https://annif.org/">Annif - tool for automated subject indexing</a> There are <a href="http://natlibfi/Annif-tutorial:%20Instructions,%20exercises%20and%20example%20data%20sets%20for%20Annif%20hands-on%20tutorial%20%28github.com%29">many video tutorials here</a> and the ability to demo the tool</li>
+</ul>
+</section>
+<section id="activity-explore-conversation-generation-chatgpt" class="level3">
+<h3 class="anchored" data-anchor-id="activity-explore-conversation-generation-chatgpt">Activity: Explore Conversation Generation (ChatGPT)</h3>
+<p>Login to use the freely available <a href="https://openai.com/chatgpt">ChatGPT (openai.com)</a> interface.</p>
+<p>To get a useful response from ChatGPT, “prompting” is key. If you only ask a simple question, you may not be happy with the results and decide to dismiss the technology too quickly, but today’s purpose is to have a deeper play in order to develop our critical thinking and information evaluation skills, allowing us to make informed decisions about utilising tools like ChatGPT in our endeavours. <a href="https://www.promptingguide.ai/introduction/basics">Basics of Prompting | Prompt Engineering Guide (promptingguide.ai)</a> gives a nice quick walk-through of how to start writing good prompts or you can take a free course !</p>
+<p>Have a play trying to get ChatGPT to generate responses to <a href="https://docs.google.com/document/d/1Mph65vvukDEjZTeH5XSKo6c7T3POY8SbuPHE_OrBN6g/edit">some of the questions here</a> (or come up with your own questions!) Critically evaluate the responses you receive from ChatGPT, what are its strengths and weaknesses, ethical considerations and challenges of using AI tools such as this.</p>
+<ul>
+<li>Is the information/response credible?</li>
+<li>Are there any biases in the responses?</li>
+<li>Does the information align with what you know from other sources?</li>
+</ul>
+</section>
+<section id="activity-explore-computer-vision-handwritten-text-recognition" class="level3">
+<h3 class="anchored" data-anchor-id="activity-explore-computer-vision-handwritten-text-recognition">Activity: Explore Computer Vision &amp; Handwritten Text Recognition</h3>
+<p>Find an image from somewhere on the web, or from your own collection, and see how each of these cloud services handles it! Try with some images of basic objects to see results (cars, fruit, bicycles…) and images with text within them.</p>
+<ul>
+<li><a href="https://cloud.google.com/vision/docs/drag-and-drop">Google Cloud Vision API</a></li>
+<li><a href="https://www.robots.ox.ac.uk/~vgg/demo/">Visual Geometry Group - University of Oxford</a></li>
+<li><a href="https://www.transkribus.org">Transkribus</a>(Try for free, but does require a free account to login)</li>
+</ul>
+</section>
+<section id="activities-exploring-hands-on-ai-workshop-materials" class="level3">
+<h3 class="anchored" data-anchor-id="activities-exploring-hands-on-ai-workshop-materials">Activities: Exploring Hands-on AI (workshop materials)</h3>
+<p>The following workshop <a href="https://cdsleiden.github.io/exploring-ai/intro.html">Exploring Hands-on AI</a> was delivered to LIBER colleagues at the LIBER 2024 Annual Conference, but you can walk through many of the exercises at your own pace independently! Through a series of hands-on exercises, presented via Google Collab sheets, the workshop aimed to clarify how data science, and more particularly, generative AI systems based on Large Language Models (LLMs) can be applied within a library context and covers:</p>
+<ul>
+<li>Google Colab Basics</li>
+<li>Introduction to Machine Learning</li>
+<li>Object detection with YOLO</li>
+<li>Large Language Models</li>
+<li>Retrieval Augmented Generation</li>
+</ul>
+</section>
+</section>
+<section id="recommended-readingviewing" class="level2">
+<h2 class="anchored" data-anchor-id="recommended-readingviewing">Recommended Reading/Viewing</h2>
+<p>Much of this topic guide is based on both a <a href="https://carpentries-incubator.github.io/machine-learning-librarians-archivists/">Library Carpentry Intro to AI for GLAM</a> lesson I have developed with colleagues and a 2024 talk I gave as part of a Research Libraries UK Digital Shift Forum so if you’d like to view/listen to the content covered in this topic guide as a lecture:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://www.youtube.com/embed/CrCP5rYai9M?si=A9kw93B_TvOoDFnV"><img src="https://github.com/libereurope/ds-essentials/blob/main/book/images/YouTube.png?raw=true" class="img-fluid figure-img" alt="Watch the video"></a></p>
+<figcaption>Watch the video</figcaption>
+</figure>
+</div>
+<p>There are of course untold numbers of lists out there with resources for learning more about AI &amp; Machine Learning but I think this particular guide is exceptionally useful in its coverage and topics selected, particularly as they are quite specifically for Librarians: <a href="https://libguides.northwestern.edu/ai-tools-research/librarians">Add’tl Reading for Librarians &amp; Faculty - Using AI Tools in Your Research - Research Guides at Northwestern University</a></p>
+</section>
+<section id="finding-communities-of-practice" class="level2">
+<h2 class="anchored" data-anchor-id="finding-communities-of-practice">Finding Communities of Practice</h2>
+<p>The <a href="https://sites.google.com/view/ai4lam">AI4Lam group</a> is an excellent, engaged and welcoming international organisation dedicated to all things AI in Libraries, Archives and Museums. It’s free for anyone to join and is a great first step for anyone interested in learning more about this topic!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/jezcope\.github\.io\/ds-essentials\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>A 2023-2027 <a href="https://libereurope.eu/working-groups">LIBER Working Group</a> collaboration between <a href="https://libereurope.eu/working-group/digital-scholarship-and-digital-cultural-heritage-collections-working-group/">Digital Scholarship and Digital Cultural Heritage </a> and <a href="https://libereurope.eu/working-group/liber-data-science-in-libraries-working-group/">Data Science in Libraries</a></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/libereurope/ds-essentials/blob/main/book/ai-ml.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/libereurope/ds-essentials/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/noramcgregor/ds-essentials">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

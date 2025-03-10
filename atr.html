@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Adi Keinan-Schoonbaert">
+<meta name="dcterms.date" content="2024-11-27">
+<meta name="keywords" content="Handwritten Text Recognition, Optical Character Recognition">
+
+<title>Automatic Text Recognition (OCR/HTR)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./images/Favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-4e463049768ec781b502135f06fe4e5c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "Search",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-54HL7T1Z2K"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-54HL7T1Z2K', { 'anonymize_ip': true});
+</script>
+
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./Favicon.png" alt="" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text"><strong>Digital Scholarship &amp; Data Science Topic Guides for Library Professionals</strong></span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./topicguides.html" aria-current="page"> 
+<span class="menu-text">TOPIC GUIDES</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-additional-resources" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">ADDITIONAL RESOURCES</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-additional-resources">    
+        <li>
+    <a class="dropdown-item" href="./references.html">
+ <span class="dropdown-text"><strong>RECOMMENDED READING LISTS</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./dstp.html">
+ <span class="dropdown-text"><strong>START A LOCAL TRAINING PROGRAMME</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./reports.html">
+ <span class="dropdown-text"><strong>SKILLS COMPETENCY FRAMEWORKS &amp; REPORTS</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./training-platforms.html">
+ <span class="dropdown-text"><strong>TRAINING PLATFORMS</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./networks.html">
+ <span class="dropdown-text"><strong>USEFUL NETWORKS</strong></span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-contribute" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">CONTRIBUTE</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-contribute">    
+        <li>
+    <a class="dropdown-item" href="./contributing.html">
+ <span class="dropdown-text"><strong>CONTRIBUTE TO OUR PROJECT</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./guidelines.html">
+ <span class="dropdown-text"><strong>AUTHOR GUIDANCE &amp; STYLE GUIDE</strong></span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./licensing.html">
+ <span class="dropdown-text"><strong>LICENSING &amp; RE-USE</strong></span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./project-overview.html"> 
+<span class="menu-text">ABOUT</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./contact.html"> 
+<span class="menu-text">CONTACT</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./atr.html">Automatic Text Recognition (OCR/HTR)</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./topicguides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><strong>TOPIC GUIDES</strong></span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ai-ml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">AI &amp; Machine Learning in Libraries</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./api.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">APIs: A starter guide for Librarians</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./atr.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Automatic Text Recognition (OCR/HTR)</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./collectionsasdata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Collections as Data: Getting Started</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./computer-vision.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Computer Vision</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./copyright.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Copyright &amp; Licensing: Current context and considerations for researchers and libraries using AI in research today</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./crowdsourcing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Crowdsourcing and Citizen Science in Cultural Heritage</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dataviz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Data Visualisation</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./digitalmapping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Digital Mapping</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./github.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GitHub: How to navigate and contribute to Git-based projects</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iiif.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">IIIF</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lod.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linked Open Data in Library Use Today</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./programming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programming for Librarians: Where to begin</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./openresearch.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Open Research (Open Science)</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workingwdata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with Data</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Jump to…</h2>
+   
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#relevance-to-the-library-sector-case-studiesuse-cases" id="toc-relevance-to-the-library-sector-case-studiesuse-cases" class="nav-link" data-scroll-target="#relevance-to-the-library-sector-case-studiesuse-cases">Relevance to the Library Sector (Case Studies/Use Cases)</a></li>
+  <li><a href="#hands-on-activity-and-other-self-guided-tutorials" id="toc-hands-on-activity-and-other-self-guided-tutorials" class="nav-link" data-scroll-target="#hands-on-activity-and-other-self-guided-tutorials">Hands-on activity and other self-guided tutorial(s)</a></li>
+  <li><a href="#recommended-readingviewing" id="toc-recommended-readingviewing" class="nav-link" data-scroll-target="#recommended-readingviewing">Recommended Reading/Viewing</a></li>
+  <li><a href="#finding-communities-of-practice" id="toc-finding-communities-of-practice" class="nav-link" data-scroll-target="#finding-communities-of-practice">Finding Communities of Practice</a></li>
+  </ul>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/libereurope/ds-essentials/blob/main/book/atr.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/libereurope/ds-essentials/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Automatic Text Recognition (OCR/HTR)</h1>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Author</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Adi Keinan-Schoonbaert <a href="mailto:digitalresearch@bl.uk" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0002-4382-3328" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="www.bl.uk">
+            British Library
+            </a>
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 27, 2024</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">February 10, 2025</p>
+    </div>
+  </div>
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    <p>Demystifying the process behind automatic text recognition and offering practical tips on how anyone can get started in their your own library.</p>
+  </div>
+</div>
+
+<div>
+  <div class="keywords">
+    <div class="block-title">Keywords</div>
+    <p>Handwritten Text Recognition, Optical Character Recognition</p>
+  </div>
+</div>
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Cultural heritage organisations have been digitising their historical collections for several decades, outputting large-scale sets of digitised collection items - printed books, newspapers, manuscripts, maps, and many other content types as simple JPG, PNG, or TIFF images. Though these collections are made available for users to read online, there is often an important layer of accessibility that is missing as the text appearing in these images is not always made searchable, editable, or analysable.</p>
+<p>Automatic Text Recognition (ATR) refers to the process of using software to convert images of text, such as scanned or photographed documents, photos, or printed pages, into machine-readable text. ATR is primarily associated with Optical Character Recognition (OCR) (for print materials) and Handwritten Text Recognition (HTR) technologies (for handwritten materials) that enable computers to identify and extract text from various sources. These technologies are critical for digitising historical and cultural documents, making them searchable, accessible, and preservable for future generations.</p>
+<p>Though ATR technologies have been around in some form or another for nearly as long as we’ve been digitising, results can be patchy for cultural heritage collections. This may be down to costs as these technologies are typically considered an add-on to the basic photographic or scanning services and institutions or projects don’t have the funds available to cover that aspect of digitisation. Or the traditional OCR technology at any given time simply isn’t developed enough to provide very accurate results to handle the anomalies of, for instance, quite worn or warped manuscript pages. Or in the case of handwritten texts, particularly low-resource languages, the existing technology simply cannot cope and text outputs are illegible. The advent of machine learning technologies applied to the challenge of Automatic Text Recognition of handwritten or print materials, and with it, the ability to train a software to recognise specific text based on what it has already seen, however, provides huge opportunities to transform accessibility to the text contained within all manner of historical digitised images.</p>
+<p>So what is the difference between the decades-old OCR technology and the more recent, AI/Machine Learning-based software? Traditional OCR systems rely on a set of predefined rules and templates to recognise characters. These rules are often based on the geometric properties of the text, such as the shapes and patterns of characters. On the other hand, Machine Learning-based OCR, or in other words, Automatic Text Recognition that leverages Artificial Intelligence, uses neural networks to learn to recognise characters from large datasets. These systems can be trained to automatically learn to identify the features that distinguish different characters and predict with some probability what that character could be. AI-OCR can handle a wide variety of fonts, sizes, and styles, and is robust to noisy, distorted, or low-quality images. The models can generalise well to different types of documents and text layouts; and they can continuously improve by retraining on new data, which allows them to adapt to new types of text and writing styles over time.</p>
+<p>When diving deeper into AI-OCR, you may encounter the term ‘<a href="https://www.digitisation.eu/glossary/ground-truth/">Ground Truth</a>’. Ground Truth refers to the accurate, manually created and verified data used as a standard or benchmark to both train and evaluate the performance of OCR/HTR systems. Ground truth data consists of the correct transcription of a document, including precise details about characters, words, and layout. It is used to ‘teach’ software how to recognise and transcribe text, as well as measure the accuracy of OCR/HTR outputs by comparing the machine-recognised text against this gold-standard reference.</p>
+<p>Automatic Text Recognition typically involves multiple stages or elements, which include image pre-processing, binarisation, layout analysis, and text recognition.</p>
+<ol type="1">
+<li><strong>Image Pre-processing</strong>: Pre-processing is the first step and focuses on enhancing the quality of the input image to improve recognition accuracy. This may include tasks such as noise reduction, skew correction (to align slanted images), and contrast adjustment. These operations are crucial when dealing with old or degraded documents, where imperfections in the image can hinder the subsequent stages.</li>
+<li><strong>Binarisation</strong>: Binarisation converts a grayscale or colour image into a binary image, typically using black for the text and white for the background. This simplifies the image, making it easier for the OCR/HTR system to distinguish between the text and non-text elements. This step is especially important for historical documents, where stains, fading, or other degradation can confuse the OCR/HTR engine.</li>
+</ol>
+<p><img src="https://github.com/libereurope/ds-essentials/blob/main/book/images/ATR_1.png?raw=true" class="img-fluid"> <em>Examples of binarisation and its effects on legibility, created by Peter Smith who worked to improve</em> <a href="https://blogs.bl.uk/digital-scholarship/2024/03/handwritten-text-recognition-of-the-dunhuang-manuscripts.html"><em>Chinese HTR</em></a> <em>processes</em></p>
+<ol type="1">
+<li><strong>Layout Analysis</strong>: In layout analysis, the system identifies the structure of the document, distinguishing between various elements such as paragraphs, columns, headings, footnotes, and images. It is essential for documents with complex formatting (e.g.&nbsp;newspapers or tables) to ensure that the text is correctly segmented and processed. This step may also involve detecting text regions in multi-layout documents or distinguishing between handwritten and printed text.</li>
+<li><strong>Text Recognition</strong>: The core of the OCR/HTR process is text recognition, where the system identifies individual characters, words, and sentences within the segmented text regions. Modern OCR/HTR engines use pattern recognition techniques or machine learning algorithms, such as neural networks, to improve accuracy. Some systems also perform language modelling, where the recognised text is checked against a dictionary or corpus to ensure contextual correctness, particularly useful for older languages or scripts.</li>
+<li><strong>Post-Processing</strong>: OCR/HTR often produces errors, especially when dealing with degraded, old, or complex manuscripts. To improve accuracy, post-processing correction is crucial. One effective method for refining OCR/HTR outputs is crowdsourcing text correction, where volunteers, often through online platforms, manually review and correct transcribed text. This method leverages the knowledge and dedication of the public to handle the nuances of historical documents that automated systems struggle with, such as obscure spellings or unusual handwriting styles. Recent experiments in automating text recognition have leveraged Large Language Models (LLMs) to enhance the accuracy of OCR/HTR systems. LLMs, such as GPT-based models, are particularly adept at understanding context and handling ambiguities in textual data, which makes them valuable for recognising and correcting errors in historical documents. LLMs can also be fine-tuned to specific historical corpora, allowing them to better interpret unique vocabulary, syntax, or stylistic variations. And, it should be mentioned that once you have perfectly post-processed OCR/HTR results, you can use those as Ground Truth to retrain models and improve them!</li>
+</ol>
+</section>
+<section id="relevance-to-the-library-sector-case-studiesuse-cases" class="level2">
+<h2 class="anchored" data-anchor-id="relevance-to-the-library-sector-case-studiesuse-cases">Relevance to the Library Sector (Case Studies/Use Cases)</h2>
+<p>Keeping up with, and even contributing to, developments in Automatic Text Recognition technology is vital for heritage organisations and especially for the library sector, where large volumes of historical and cultural documents are preserved. ATR technologies provide several key benefits:</p>
+<ul>
+<li><strong>Accessibility</strong>: ATR technologies are essential for libraries working to make their text content available for users. Once digitised and converted into searchable text, documents become accessible to a global audience. Researchers and the general public can search and access texts remotely, making previously hidden information available. Creating searchable documents allows users to quickly locate specific terms or phrases within vast collections. This enhances the research process and saves time.</li>
+<li><strong>Content Enrichment</strong>: ATR can help enrich library records by enhancing their metadata; therefore assisting libraries in delivering a better service to their users. Different entities could be extracted from the text, such as author or place of publication, as well as subjects and descriptions. These could be used to enhance catalogue records for the benefit of library users.</li>
+<li><strong>Digital Research</strong>: By converting historical texts into machine-readable formats, ATR technologies support digital humanities projects, where large-scale analysis, such as text mining or linguistic research, can uncover new insights into history, culture, and language development. The ability to extract text from digitised items is fundamental for any downstream tasks and enables unlocking content for large-scale analysis, e.g.&nbsp;text mining, Natural language processing (NLP), Named Entity Recognition (NER), sentiment analysis or topic modelling.​</li>
+</ul>
+<section id="case-studies" class="level3">
+<h3 class="anchored" data-anchor-id="case-studies">Case Studies</h3>
+<p>In collaboration with <a href="http://www.primaresearch.org/">PRImA Research Lab</a>, the British Library ran several OCR/HTR competitions with the aim of encouraging the development of state-of-the-art in text recognition software, facilitating dialogue around the challenges and opportunities of ATR, and creating openly licensed ground truth datasets. Competitions around early Bengali books and Quarterly Lists were run as part of the <a href="https://web.archive.org/web/20231001055233/https://www.bl.uk/projects/two-centuries-of-indian-print">Two Centuries of Indian Print</a> project, and the project used Transkribus to create <a href="https://bl.iro.bl.uk/collections/d4b2009d-b28d-4518-b219-fc0cd53007e7">OCR transcriptions</a> for the Bengali books, in collaboration with the School of Cultural Texts and Records at Jadavpur University. Additional competitions were focused on finding solutions to automatically transcribe <a href="https://web.archive.org/web/20230606024755/http://www.bl.uk/projects/Arabic-htr">historical Arabic scientific manuscripts</a>, using materials digitised by the Library and published on the <a href="https://qdl.qa/en/">Qatar Digital Library (QDL)</a>.</p>
+<p><img src="https://github.com/libereurope/ds-essentials/blob/main/book/images/ATR_2.png?raw=true" class="img-fluid"> <em>Screenshot from Transkribus, used as the ATR engine in the</em> <a href="https://web.archive.org/web/20231001055233/https://www.bl.uk/projects/two-centuries-of-indian-print"><em>Two Centuries of Indian Print</em></a> <em>project</em></p>
+<p>The <a href="https://openiti.org/">Open Islamicate Texts Initiative</a> (OpenITI) is a collaborative project involving researchers from Aga Khan University’s Institute for the Study of Muslim Civilisations in London, the Roshan Institute for Persian Studies at the University of Maryland, College Park, and Universität Hamburg. Its goal is to establish the digital infrastructure needed for the study of Islamicate cultures. OpenITI focuses on building digital resources for Islamicate studies by enhancing optical character recognition (OCR) and handwritten text recognition (HTR) for Arabic-script texts, creating standardised OCR and HTR outputs and text encoding, and developing platforms for collaborative work on Islamicate text corpora and digital editions.</p>
+<p>The <a href="https://blogs.bl.uk/digital-scholarship/2023/08/my-ahrc-rluk-professional-practice-fellowship-a-year-on.html">Legacies of Curatorial Voice in the Descriptions of Incunabula Collections at the British Library</a> project was part of Digital Curator Dr Rossitza Atanassova’s AHRC-RLUK funded Professional Practice Fellowship Project (2022–23). It aimed to explore innovative methods for working with digitised catalogues, enhancing the discoverability and usability of the collections they document. The research centred on the <em>Catalogue of Books Printed in the 15th Century Now at the British Museum</em> (BMC), published between 1908 and 2007, which describes over 12,700 volumes in the British Library’s incunabula collection. It used Transkribus as the ATR software and also as a <a href="https://app.transkribus.org/sites/BL-Incunabula">search and publishing web platform</a>. The project could then apply computational techniques and corpus analysis of the catalogue data thanks to the availability of OCRed text and provides fresh insights into this resource!</p>
+</section>
+</section>
+<section id="hands-on-activity-and-other-self-guided-tutorials" class="level2">
+<h2 class="anchored" data-anchor-id="hands-on-activity-and-other-self-guided-tutorials">Hands-on activity and other self-guided tutorial(s)</h2>
+<p>Here are some excellent resources to get you started:</p>
+<p><a href="https://harmoniseatr.hypotheses.org/">Automatic Text Recognition: Harmonising ATR workflows</a>: This DARIAH-EU-supported resource is a <em>great</em> place to start. This website features a set of video tutorials on ATR in English, French and German, and also includes really useful blog posts, articles and links.</p>
+<p>Check out the <a href="https://www.youtube.com/@transkribus">Transkribus YouTube</a> channel for a set of beginner-friendly tutorial videos, learning how to get started with Transkribus to effectively digitise and preserve historical documents.</p>
+<p>If you’re interested in eScriptorium, have a look at their thorough <a href="https://escriptorium.readthedocs.io/en/latest/">documentation</a> and tutorials on YouTube created by the OpenITI project. These are split into five parts: <a href="https://www.youtube.com/watch?v=N0hSNC3YvD4&amp;ab_channel=OpenITIProject">Part I</a>, <a href="https://www.youtube.com/watch?v=LDMi5lTEW6Y&amp;ab_channel=OpenITIProject">Part II</a>, <a href="https://www.youtube.com/watch?v=f5KigkLO9_E&amp;ab_channel=OpenITIProject">Part III</a>, <a href="https://www.youtube.com/watch?v=ZRKwhUEB-uo&amp;ab_channel=OpenITIProject">Part IV</a>, and <a href="https://www.youtube.com/watch?v=Lccr-pnHKX4&amp;ab_channel=OpenITIProject">Part V</a>.</p>
+<p>This <a href="https://guides.nyu.edu/tesseract">step-by-step guide</a> will teach you how to use the Tesseract open-source software, and it also recommends some software that helps prepare documents for Tesseract use.</p>
+<p>For more advanced practitioners, there’s an introductory course by Dr William Mattingly teaching you how to automate <a href="https://github.com/wjbmattingly/ocr_python_textbook">OCR in Python</a>. It includes using OpenCV (an open-source library specialising in computer vision and machine learning tasks) and Pytesseract, an OCR tool in Python. Helpfully, this course functions alongside a YouTube series of tutorials on <a href="https://www.youtube.com/playlist?list=PL2VXyKi-KpYuTAZz__9KVl1jQz74bDG7i">OCR in Python</a>.</p>
+<p>Another one for the more confident practitioners is this Programming Historian <a href="https://programminghistorian.org/en/lessons/ocr-with-google-vision-and-tesseract">OCR with Google Vision API and Tesseract</a> tutorial by Isabelle Gribomont, published in March 2023.</p>
+<p>This Programming Historian <a href="https://programminghistorian.org/en/lessons/OCR-and-Machine-Translation">OCR and Machine Translation</a> course by Andrew Akhlaghi (published in January 2021) uses Tesseract for OCR and takes the results to another level - translation.</p>
+</section>
+<section id="recommended-readingviewing" class="level2">
+<h2 class="anchored" data-anchor-id="recommended-readingviewing">Recommended Reading/Viewing</h2>
+<p>This is a great blog post by Chris Woodform, simply entitled <a href="https://www.explainthatstuff.com/how-ocr-works.html">Optical character recognition (OCR)</a>. It’s a good place to start! It explains what OCR is and how it works, and even looks at the history of this technology.</p>
+<p><a href="https://github.com/kba/awesome-ocr">Awesome OCR</a> is a resource created by Konstantin Baierer from the OCR-D project. It hasn’t been updated for a while, however, it includes really useful and comprehensive lists of software tools, libraries and literature. It also includes a list of ground truth datasets, so well worth taking a look.</p>
+<p>The <a href="https://www.digitisation.eu/">IMPACT Centre of Competence</a>  is a useful OCR resource. In their words, IMPACT is a ‘not for profit organisation with the mission to make the digitisation of text “better, faster, cheaper” and to further advance the state-of-the-art in the field of document imaging, language technology and the processing of historical text.’ You can find datasets, training materials, blogs and more!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://www.youtube.com/watch?v=NbGCkxD1PbI&amp;ab_channel=IMPACTCentreofCompetence"><img src="https://github.com/libereurope/ds-essentials/blob/main/book/images/ATR_3.png?raw=true" class="img-fluid figure-img" alt="An Introduction to Ground Truth Production with the IMPACT Project"></a></p>
+<figcaption>An Introduction to Ground Truth Production with the IMPACT Project</figcaption>
+</figure>
+</div>
+<p>An excellent guide to newspaper OCR and data analysis is this <a href="https://bookdown.org/yann_ryan/r-for-newspaper-data/">Short Guide to Historical Newspaper Data, Using R</a> by Yann Ryan.</p>
+<p>Many excellent data analysis tools such as NLP can also be found on this <a href="https://github.com/Living-with-machines/dhoxss-text2tech?tab=readme-ov-file">GitHub page</a>, which collated materials used for the Text to Tech workshop at the Digital Humanities Oxford Summer School, by Kaspar von Beelen, Mariona Coll Ardanuy and Federico Nanni (and <a href="https://huggingface.co/learn/nlp-course/chapter1/1">this</a> is another brilliant introduction into NLP!).</p>
+<p>There are many papers on OCR/HTR but here’s a small selection:</p>
+<ul>
+<li>Khan, R., Gupta, N., Sinhababu, A., &amp; Chakravarty, R. (2023). Impact of Conversational and Generative AI Systems on Libraries: A Use Case Large Language Model (LLM). <em>Science &amp; Technology Libraries</em>, 1–15. <a href="https://doi.org/10.1080/0194262X.2023.2254814" class="uri">https://doi.org/10.1080/0194262X.2023.2254814</a></li>
+<li>Neudecker, C., Baierer, K., Federbusch, M., Boenig, M., Würzner, K. M., Hartmann, V., &amp; Herrmann, E. (2019). OCR-D: An end-to-end open source OCR framework for historical printed documents. In <em>Proceedings of the 3rd international conference on digital access to textual cultural heritage</em>, 53-58. <a href="https://dl.acm.org/doi/10.1145/3322905.3322917" class="uri">https://dl.acm.org/doi/10.1145/3322905.3322917</a></li>
+<li>Nguyen, T.T.H., Jatowt, A., Coustaty, M., &amp; Doucet, A. (2021). Survey of Post-OCR Processing Approaches. <em>ACM Computing Surveys (CSUR)</em>, 54(6), 1-37. <a href="https://doi.org/10.1145/3453476" class="uri">https://doi.org/10.1145/3453476</a></li>
+<li>Smith, D.A. &amp; Cordell, R. (2018). <a href="http://hdl.handle.net/2047/D20297452">A Research Agenda for Historical and Multilingual Optical Character Recognition</a>.</li>
+<li>Van Strien, D., Beelen, K., Ardanuy, M., Hosseini, K., McGillivray, B., &amp; Colavizza, G. (2020). <em>Assessing the impact of OCR quality on downstream NLP tasks</em>. SCITEPRESS - Science and Technology Publications. <a href="https://doi.org/10.17863/CAM.52068" class="uri">https://doi.org/10.17863/CAM.52068</a></li>
+</ul>
+<p>Some journals to look out for include, for example, the <a href="https://link.springer.com/journal/10032">International Journal on Document Analysis and Recognition (IJDAR)</a>, <a href="https://www.sciencedirect.com/journal/pattern-recognition">Pattern Recognition</a>, or the <a href="https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=34">IEEE Transactions on Pattern Analysis and Machine Intelligence (PAMI)</a>.</p>
+<p>The team behind the Hypotheses ‘<a href="https://harmoniseatr.hypotheses.org/">Automatic Text Recognition: Harmonising ATR workflows</a>’ resource created this insightful <a href="https://harmoniseatr.hypotheses.org/files/2023/11/Edited_ATR-roadmap_V2.pdf">road map</a> to help you get started with Automatic Text Recognition. The road map is divided into three sections, and asks you to consider the following questions:</p>
+<p>I - General Information</p>
+<ol type="1">
+<li>What type of texts/text collections do you work with?</li>
+<li>How can you integrate Automated Text Recognition in your workflow?</li>
+</ol>
+<p>II - Technical information</p>
+<ol type="1">
+<li>Why do you want to use ATR?</li>
+<li>What is your objective?</li>
+<li>Do you have technical and financial resources?</li>
+</ol>
+<p>III - Setting up ATR in your project</p>
+<ol type="1">
+<li>Choose your tool</li>
+<li>Is there transcription data that can be reused (e.g.&nbsp;training data)?</li>
+<li>Is there an appropriate generic model?</li>
+<li>What are your transcription rules?</li>
+<li>Do you plan to share your ATR training data? What are your ATR predictions?</li>
+<li>Where can you share data? In which format?</li>
+</ol>
+<p>This document also includes links to tutorials and documentation, a selection of articles, ATR tools and where to find ATR ground truth datasets.</p>
+<p>When it comes to ground truth datasets, a good place to look is the <a href="https://htr-united.github.io/">HTR-United</a> resource, which includes training datasets used for both transcription or segmentation models, for different periods and styles of writing.</p>
+<p><a href="https://ocr-d.de/en/">OCR-D</a> is a good place to visit too, and it has a ground truth repository <a href="https://github.com/OCR-D/gt_structure_text/releases">available here</a>.</p>
+</section>
+<section id="finding-communities-of-practice" class="level2">
+<h2 class="anchored" data-anchor-id="finding-communities-of-practice">Finding Communities of Practice</h2>
+<p>Some tools and platforms have solid communities around them which you can get in touch with - or be a part of. <a href="https://www.transkribus.org/">Transkribus</a>, for example, has an active <a href="https://www.facebook.com/transkribus">Facebook</a> page and a <a href="https://www.facebook.com/groups/614090738935143">user group</a>, where Transkribus users can ask questions and get support from the Transkribus team and from each other.</p>
+<p>Several conference series discuss advances in OCR/HTR, and would be a good place to meet colleagues and hear about interesting ATR projects. For example, the International Conference on Document Analysis and Recognition (<a href="https://en.wikipedia.org/wiki/International_Conference_on_Document_Analysis_and_Recognition">ICDAR</a>) and the International Conference on Frontiers in Handwriting Recognition (ICFHR) have been well established. Alternatively, many Digital Humanities conferences will have papers on this topic, e.g.&nbsp;the <a href="https://adho.org/conference/">ADHO DH conference serie</a> or <a href="https://sites.google.com/view/ai4lam">AI4LAM Fantastic Futures</a> conferences.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/jezcope\.github\.io\/ds-essentials\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>A 2023-2027 <a href="https://libereurope.eu/working-groups">LIBER Working Group</a> collaboration between <a href="https://libereurope.eu/working-group/digital-scholarship-and-digital-cultural-heritage-collections-working-group/">Digital Scholarship and Digital Cultural Heritage </a> and <a href="https://libereurope.eu/working-group/liber-data-science-in-libraries-working-group/">Data Science in Libraries</a></p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/libereurope/ds-essentials/blob/main/book/atr.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/libereurope/ds-essentials/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/noramcgregor/ds-essentials">
+      <i class="bi bi-github" role="img">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
