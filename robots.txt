@@ -1,1 +1,1 @@
-Sitemap: https://jezcope.github.io/ds-essentials/sitemap.xml
+Sitemap: https://jezcope.github.io/ds-topic-guides/sitemap.xml
